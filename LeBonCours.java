@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LeBonCours {
 
@@ -70,16 +71,53 @@ public class LeBonCours {
 		this.listeEleves = listeEleve;
 	}
 	
-	public LeBonCours(ArrayList<Prof> bio, ArrayList<Prof> maths, ArrayList<Prof> phy, ArrayList<Prof> langues,
-			ArrayList<Prof> litt, ArrayList<Prof> eco, ArrayList<Prof> listeProfs, ArrayList<Eleve> listeEleves) {
-		super();
-		this.bio = bio;
-		this.maths = maths;
-		this.phy = phy;
-		this.langues = langues;
-		this.litt = litt;
-		this.eco = eco;
-		this.listeProfs = listeProfs;
+	public LeBonCours() {
+		int[][] dispo = new int[7][11];
+		ArrayList<Eleve> listeEleves = new ArrayList<Eleve>();
+		ArrayList<Prof> listeProfs = new ArrayList<Prof>();
+		ArrayList<Prof> bio = new ArrayList<Prof>();
+		ArrayList<Prof> maths = new ArrayList<Prof>();
+		ArrayList<Prof> phy = new ArrayList<Prof>();
+		ArrayList<Prof> litt = new ArrayList<Prof>();
+		ArrayList<Prof> langues = new ArrayList<Prof>();
+		ArrayList<Prof> eco = new ArrayList<Prof>();
+ 		for (int i=0; i<7; i++) {
+ 			for(int j=0; j<11;j++){
+ 				dispo[i][j]=1;
+ 			}
+ 		}
+ 		ArrayList<Reservation> resa = new ArrayList<Reservation>();
+ 		EmploiDuTemps edt = new EmploiDuTemps(dispo,resa);
+ 		Prof p1 = new Prof("Aljijakli","Tarek","M",21,4,76100,20,true,edt);
+ 		Prof p2 = new Prof("Wade","Barthelemy","M",22,4,76000,20,true,edt);
+ 		Prof p3 = new Prof("Guilloteau","Claire","F",21,4,76100,25,true,edt);
+ 		Prof p4 = new Prof("Montanier","Marion","F",19,1,76830,15,true,edt);
+ 		Prof p5 = new Prof("Lambert","Cedrik","M",20,2,76100,18,true,edt);
+ 		Eleve e1 = new Eleve("Ngaba","Fabrice","M",16,-2,76000);
+ 		Eleve e2 = new Eleve("LeFeuvre","Louis","M",15,-3,76550);
+ 		Eleve e3 = new Eleve("Jallais","Maeva","F",18,0,76100);
+ 		this.listeProfs = listeProfs;
+ 		this.bio = bio;
+ 		this.eco = eco;
+ 		this.phy = phy;
+ 		this.maths = maths;
+ 		this.langues = langues;
+ 		this.litt = litt;
+ 		listeEleves.add(e1);
+ 		listeEleves.add(e2);
+ 		listeEleves.add(e3);
+		try {
+			ajouterProf(maths, listeProfs, p1);
+			ajouterProf(phy, listeProfs, p2);
+	 		ajouterProf(bio, listeProfs, p3);
+			ajouterProf(litt, listeProfs, p4);
+			ajouterProf(eco, listeProfs, p5);
+			ajouterProf(langues, listeProfs, p1);
+			ajouterProf(maths, listeProfs, p2);
+		} catch (DejaEnregistreeProf e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.listeEleves = listeEleves;
 	}
 	
@@ -401,8 +439,25 @@ public class LeBonCours {
 		}
 	}
 	
-	public void main(String[] args){
-		System.out.println("Bienvenue sur LE BON COURS");
+	public static void main(String[] args){
+		System.out.println("Bienvenue sur leboncours.fr");
+		LeBonCours leboncours = new LeBonCours();
+		// Chargement de donnees initiales
+		System.out.println("Etes vous un eleve ou un prof ?");
+		System.out.println(" 0 : Prof");
+		System.out.println(" 1 : Eleve");
+		@SuppressWarnings("resource")
+		Scanner lecture = new Scanner(System.in);
+		int rep = Integer.parseInt(lecture.nextLine());
+		if (rep==1) {
+			EleveConsole eleve = new EleveConsole(leboncours.getListeEleve().get(1),leboncours);
+			eleve.run();
+		}
+		else if (rep==0) {
+			ProfConsole console = new ProfConsole(leboncours.getListeProfs().get(1),leboncours);
+			console.run();
+		}
+		
 	}
 	
 }
