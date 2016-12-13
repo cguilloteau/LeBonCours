@@ -72,53 +72,14 @@ public class LeBonCours {
 	}
 	
 	public LeBonCours() {
-		int[][] dispo = new int[7][11];
-		ArrayList<Eleve> listeEleves = new ArrayList<Eleve>();
-		ArrayList<Prof> listeProfs = new ArrayList<Prof>();
-		ArrayList<Prof> bio = new ArrayList<Prof>();
-		ArrayList<Prof> maths = new ArrayList<Prof>();
-		ArrayList<Prof> phy = new ArrayList<Prof>();
-		ArrayList<Prof> litt = new ArrayList<Prof>();
-		ArrayList<Prof> langues = new ArrayList<Prof>();
-		ArrayList<Prof> eco = new ArrayList<Prof>();
- 		for (int i=0; i<7; i++) {
- 			for(int j=0; j<11;j++){
- 				dispo[i][j]=1;
- 			}
- 		}
- 		ArrayList<Reservation> resa = new ArrayList<Reservation>();
- 		EmploiDuTemps edt = new EmploiDuTemps(dispo,resa);
- 		Prof p1 = new Prof("Aljijakli","Tarek","M",21,4,76100,20,true,edt);
- 		Prof p2 = new Prof("Wade","Barthelemy","M",22,4,76000,20,true,edt);
- 		Prof p3 = new Prof("Guilloteau","Claire","F",21,4,76100,25,true,edt);
- 		Prof p4 = new Prof("Montanier","Marion","F",19,1,76830,15,true,edt);
- 		Prof p5 = new Prof("Lambert","Cedrik","M",20,2,76100,18,true,edt);
- 		Eleve e1 = new Eleve("Ngaba","Fabrice","M",16,-2,76000);
- 		Eleve e2 = new Eleve("LeFeuvre","Louis","M",15,-3,76550);
- 		Eleve e3 = new Eleve("Jallais","Maeva","F",18,0,76100);
- 		this.listeProfs = listeProfs;
- 		this.bio = bio;
- 		this.eco = eco;
- 		this.phy = phy;
- 		this.maths = maths;
- 		this.langues = langues;
- 		this.litt = litt;
- 		listeEleves.add(e1);
- 		listeEleves.add(e2);
- 		listeEleves.add(e3);
-		try {
-			ajouterProf(maths, listeProfs, p1);
-			ajouterProf(phy, listeProfs, p2);
-	 		ajouterProf(bio, listeProfs, p3);
-			ajouterProf(litt, listeProfs, p4);
-			ajouterProf(eco, listeProfs, p5);
-			ajouterProf(langues, listeProfs, p1);
-			ajouterProf(maths, listeProfs, p2);
-		} catch (DejaEnregistreeProf e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.listeEleves = listeEleves;
+		this.listeEleves = new ArrayList<Eleve>();
+		this.listeProfs = new ArrayList<Prof>();
+		this.bio = new ArrayList<Prof>();
+		this.maths = new ArrayList<Prof>();
+		this.phy = new ArrayList<Prof>();
+		this.litt = new ArrayList<Prof>();
+		this.langues = new ArrayList<Prof>();
+		this.eco = new ArrayList<Prof>();
 	}
 	
 	public void ajouterProf(ArrayList<Prof> matiere,ArrayList<Prof> listeProfs,Prof leprof) throws DejaEnregistreeProf{
@@ -442,7 +403,9 @@ public class LeBonCours {
 	public static void main(String[] args){
 		System.out.println("Bienvenue sur leboncours.fr");
 		LeBonCours leboncours = new LeBonCours();
-		// Chargement de donnees initiales
+		leboncours.LancementFichTXT();
+		
+		// Suite à modifier
 		System.out.println("Etes vous un eleve ou un prof ?");
 		System.out.println(" 0 : Prof");
 		System.out.println(" 1 : Eleve");
@@ -457,6 +420,9 @@ public class LeBonCours {
 			ProfConsole console = new ProfConsole(leboncours.getListeProfs().get(1),leboncours);
 			console.run();
 		}
+		// Jusque là
+		
+		leboncours.EnregistreFichTXT();
 		
 	}
 	
